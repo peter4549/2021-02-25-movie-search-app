@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MovieSearchApp</string>
+
+    <string name="empty_input_error_message">영화 제목을 입력하세요.</string>
+    <string name="no_search_result_found_message">검색 결과를 찾을 수 없습니다.</string>
+    <string name="recent_search_history">최근 검색 이력</string>
+    <string name="recent_searches">최근 검색</string>
+    <string name="search">검색</string>
+    <string name="title">제목</string>
+</resources>
