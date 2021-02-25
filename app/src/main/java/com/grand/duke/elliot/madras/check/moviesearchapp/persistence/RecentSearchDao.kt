@@ -8,7 +8,7 @@ interface RecentSearchDao {
     @Query("SELECT * FROM recent_search ORDER BY time ASC")
     fun getAll(): LiveData<List<RecentSearch>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(recentSearch: RecentSearch)
 
     @Delete

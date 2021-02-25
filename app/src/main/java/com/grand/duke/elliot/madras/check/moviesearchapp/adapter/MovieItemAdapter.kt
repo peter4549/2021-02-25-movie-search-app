@@ -33,8 +33,8 @@ class MovieItemAdapter: ListAdapter<MovieItem, MovieItemAdapter.ViewHolder>(Movi
                 .into(binding.imageView)
 
             binding.textViewTitle.setHtmlText(item.title)
-            binding.textViewPublicationDate.text = item.pubDate.toString() // todo check. format.
-            binding.textViewUserRating.text = item.userRating.toString() // todo check format.
+            binding.textViewPublicationDate.text = item.pubDate
+            binding.textViewUserRating.text = item.userRating
             binding.root.setOnClickListener {
                 onItemClickListener?.onItemClick(item)
             }
@@ -53,7 +53,7 @@ class MovieItemAdapter: ListAdapter<MovieItem, MovieItemAdapter.ViewHolder>(Movi
 
 class MovieDiffCallback: DiffUtil.ItemCallback<MovieItem>() {
     override fun areItemsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean {
-        return oldItem.title == newItem.title && oldItem.pubDate == newItem.pubDate
+        return oldItem.title == newItem.title && oldItem.image == newItem.image
     }
 
     override fun areContentsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean {

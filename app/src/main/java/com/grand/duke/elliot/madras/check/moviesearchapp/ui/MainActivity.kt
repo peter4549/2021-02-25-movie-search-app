@@ -1,9 +1,14 @@
 package com.grand.duke.elliot.madras.check.moviesearchapp.ui
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +17,7 @@ import com.grand.duke.elliot.madras.check.moviesearchapp.R
 import com.grand.duke.elliot.madras.check.moviesearchapp.adapter.MovieItemAdapter
 import com.grand.duke.elliot.madras.check.moviesearchapp.databinding.ActivityMainBinding
 import com.grand.duke.elliot.madras.check.moviesearchapp.network.MovieItem
+import com.grand.duke.elliot.madras.check.moviesearchapp.network.NaverMovieApi
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity(),
@@ -68,13 +74,23 @@ class MainActivity : AppCompatActivity(),
                     return@setOnClickListener
                 }
 
-                viewModel.searchMovies(searchWord)
+                viewModel.searchMovies(searchWord) {
+                    showToast(getString(R.string.check_internet_connection_message))
+                }
             }
 
             binding.buttonResentSearches.setOnClickListener {
                 RecentSearchesBottomSheetDialogFragment().apply {
                     show(supportFragmentManager, tag)
                 }
+            }
+
+            binding.textInputEditText.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.buttonSearch.performClick()
+                    return@setOnEditorActionListener false
+                }
+                false
             }
         }
 
@@ -92,13 +108,19 @@ class MainActivity : AppCompatActivity(),
                     if (itemCount < 1)
                         return
 
-                    if (viewModel.total > itemCount) {
-                        val lastCompletelyVisibleItemPosition =
+                    val lastCompletelyVisibleItemPosition =
                             layoutManager.findLastCompletelyVisibleItemPosition()
 
-                        if (lastCompletelyVisibleItemPosition >= itemCount.dec()) {
-                            viewModel.searchAdditionalMovies(itemCount)
-                        }
+                    Timber.d("itemCount: ${itemCount}.")
+                    Timber.d("lastCompletelyVisibleItemPosition: ${lastCompletelyVisibleItemPosition}.")
+                    Timber.d("NaverMovieApi.start: ${NaverMovieApi.start}.")
+                    Timber.d("viewModel.total: ${viewModel.total}.")
+
+                    if (viewModel.total > itemCount) {
+                        if (lastCompletelyVisibleItemPosition >= itemCount.dec())
+                            viewModel.searchAdditionalMovies {
+                                showToast(getString(R.string.check_internet_connection_message))
+                            }
                     }
                 }
             })
@@ -106,7 +128,10 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun showToast(text: String, duration: Int = Toast.LENGTH_SHORT) {
-        Toast.makeText(this, text, duration).show()
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            Toast.makeText(this, text, duration).show()
+        }, 0)
     }
 
     /** MovieItemAdapter.OnItemClickListener. */

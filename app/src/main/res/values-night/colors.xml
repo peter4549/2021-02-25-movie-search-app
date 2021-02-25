@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="error">#CF6679</color>
+
+    <color name="high_emphasis">#DEFFFFFF</color>
+    <color name="medium_emphasis">#99FFFFFF</color>
+    <color name="disabled">#61FFFFFF</color>
+</resources>

@@ -36,7 +36,7 @@ class MainViewModel(application: Application): ViewModel() {
         this.rowCount = rowCount
     }
 
-    fun searchMovies(title: String) {
+    fun searchMovies(title: String, onError: () -> Unit) {
         if (title == _currentTitle)
             return
 
@@ -54,19 +54,23 @@ class MainViewModel(application: Application): ViewModel() {
         insertRecentSearch(RecentSearch(_currentTitle, System.currentTimeMillis()))
 
         repository.getMovies(_currentTitle, NaverMovieApi.start) {
-            _total = it.total
-            setMovies(it.items)
+            it?.let {
+                NaverMovieApi.start += it.items.count()
+                _total = it.total
+                setMovies(it.items)
+            } ?: onError.invoke()
         }
     }
 
-    fun searchAdditionalMovies(itemCount: Int) {
+    fun searchAdditionalMovies(onError: () -> Unit) {
         if (_currentTitle.isBlank())
             return
 
-        NaverMovieApi.start += itemCount
-
         repository.getMovies(_currentTitle, NaverMovieApi.start) {
-            addMovies(it.items)
+            it?.let {
+                NaverMovieApi.start += it.items.count()
+                addMovies(it.items)
+            } ?: onError.invoke()
         }
     }
 

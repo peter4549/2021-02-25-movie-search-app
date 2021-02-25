@@ -17,12 +17,8 @@
         android:gravity="center_vertical"
         android:hint="@string/search"
         android:textColorHint="@color/medium_emphasis"
-        app:boxBackgroundColor="@color/surface"
-        app:boxCornerRadiusTopEnd="8dp"
-        app:boxCornerRadiusTopStart="8dp"
-        app:boxStrokeColor="@color/surface"
         app:boxStrokeErrorColor="@color/error"
-        app:boxStrokeWidth="2dp"
+        app:boxStrokeWidth="1dp"
         app:endIconMode="clear_text"
         app:endIconTint="@color/icon"
         app:errorEnabled="true"
@@ -40,7 +36,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_extra_small"
             android:gravity="center_vertical"
+            android:imeOptions="actionDone"
             android:inputType="textPersonName"
+            android:singleLine="true"
             android:textColor="@color/color_text_high_emphasis"
             android:textSize="@dimen/text_size_medium_large"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,10 +53,9 @@
         android:layout_marginEnd="@dimen/spacing_extra_small"
         android:minWidth="0dp"
         android:text="@string/search"
-        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/button_resent_searches"
-        app:layout_constraintTop_toTopOf="@+id/button_resent_searches"
-        app:backgroundTint="@color/naver_green"/>
+        app:layout_constraintTop_toTopOf="@+id/button_resent_searches" />
 
     <Button
         android:id="@+id/button_resent_searches"
@@ -68,10 +65,9 @@
         android:layout_marginTop="@dimen/spacing_small"
         android:minWidth="0dp"
         android:text="@string/recent_searches"
-        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:backgroundTint="@color/naver_green" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
