@@ -1,16 +1,16 @@
 package com.grand.duke.elliot.madras.check.moviesearchapp.ui
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.grand.duke.elliot.madras.check.moviesearchapp.R
@@ -19,6 +19,7 @@ import com.grand.duke.elliot.madras.check.moviesearchapp.databinding.ActivityMai
 import com.grand.duke.elliot.madras.check.moviesearchapp.network.MovieItem
 import com.grand.duke.elliot.madras.check.moviesearchapp.network.NaverMovieApi
 import timber.log.Timber
+
 
 class MainActivity : AppCompatActivity(),
     MovieItemAdapter.OnItemClickListener, RecentSearchesBottomSheetDialogFragment.FragmentContainer {
@@ -92,6 +93,20 @@ class MainActivity : AppCompatActivity(),
                 }
                 false
             }
+
+            val textWatcher: TextWatcher = object : TextWatcher {
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    if (s.isNotBlank() && binding.textInputLayout.isErrorEnabled) {
+                        binding.textInputLayout.isErrorEnabled = false
+                        binding.textInputLayout.error = BLANK
+                    }
+                }
+
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun afterTextChanged(s: Editable) {}
+            }
+
+            binding.textInputEditText.addTextChangedListener(textWatcher)
         }
 
         private fun initRecyclerView() {
@@ -100,9 +115,10 @@ class MainActivity : AppCompatActivity(),
                 adapter = this@MainActivity.adapter
             }
 
-            binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val layoutManager = (recyclerView.layoutManager as? LinearLayoutManager) ?: return
+                    val layoutManager = (recyclerView.layoutManager as? LinearLayoutManager)
+                            ?: return
                     val itemCount = layoutManager.itemCount
 
                     if (itemCount < 1)
