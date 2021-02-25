@@ -28,7 +28,7 @@ class Repository(appDatabase: AppDatabase) {
                     onMovie.invoke(movie)
                 }
             } catch (e: UnknownHostException) {
-                Timber.e(e, "Failed to get search results: ${e.message}.")
+                Timber.e(e, "UnknownHostException: ${e.message}.")
                 onMovie.invoke(null)
             } catch (e: Exception) {
                 Timber.e(e, "Failed to get search results: ${e.message}.")

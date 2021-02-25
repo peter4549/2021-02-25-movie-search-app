@@ -20,7 +20,6 @@ import com.grand.duke.elliot.madras.check.moviesearchapp.network.MovieItem
 import com.grand.duke.elliot.madras.check.moviesearchapp.network.NaverMovieApi
 import timber.log.Timber
 
-
 class MainActivity : AppCompatActivity(),
     MovieItemAdapter.OnItemClickListener, RecentSearchesBottomSheetDialogFragment.FragmentContainer {
 
