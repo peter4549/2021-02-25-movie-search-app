@@ -39,5 +39,4 @@ companion object {
 }
 ```
 
-## [java.lang.RuntimeException: Can't toast on a thread that has not called Looper.prepare()]
-(https://blog.naver.com/PostView.nhn?blogId=kbh3983&logNo=220859884046&categoryNo=77&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=search)
+## [java.lang.RuntimeException: Can't toast on a thread that has not called Looper.prepare()](https://blog.naver.com/PostView.nhn?blogId=kbh3983&logNo=220859884046&categoryNo=77&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=search)
